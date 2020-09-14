@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/providers/cart.dart';
-import 'package:shop_app/providers/product.dart';
-import 'package:shop_app/screens/product_detail_screen.dart';
+import '../providers/cart.dart';
+import '../providers/product.dart';
+import '../screens/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
   @override
@@ -40,6 +40,16 @@ class ProductItem extends StatelessWidget {
               onPressed: () {
                 cart.addItem(
                     productItem.id, productItem.price, productItem.title);
+                Scaffold.of(context).hideCurrentSnackBar();
+                Scaffold.of(context).showSnackBar(SnackBar(
+                  content: Text('Added item to cart!'),
+                  duration: Duration(seconds: 2),
+                  action: SnackBarAction(
+                      label: 'UNDO',
+                      onPressed: () {
+                        cart.removeSingleItem(productItem.id);
+                      }),
+                ));
               },
               icon: Icon(Icons.shopping_cart),
               color: Theme.of(context).accentColor,
