@@ -19,14 +19,14 @@ class Product with ChangeNotifier {
       @required this.price,
       this.isFavorite = false});
 
-  Future<void> toggleFavorite() async {
-    final url = 'https://shop-app-45af2.firebaseio.com/products/$id.json';
+  Future<void> toggleFavorite(String token, userId) async {
+    final url =
+        'https://shop-app-45af2.firebaseio.com/userFavorites/$userId/$id.json?auth=$token';
     final oldStatus = isFavorite;
     isFavorite = !isFavorite;
     notifyListeners();
     try {
-      final response =
-          await http.patch(url, body: jsonEncode({'isFavorite': !isFavorite}));
+      final response = await http.put(url, body: jsonEncode(isFavorite));
       if (response.statusCode >= 400) {
         isFavorite = oldStatus;
         notifyListeners();
@@ -44,7 +44,7 @@ class Product with ChangeNotifier {
       'description': this.description,
       'imageUrl': this.imageUrl,
       'price': this.price,
-      'isFavorite': this.isFavorite
+      // 'isFavorite': this.isFavorite
     };
   }
 }
