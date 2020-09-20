@@ -24,16 +24,18 @@ class Messages extends StatelessWidget {
                       final message = docs[index].data()['text'].toString();
                       final username =
                           docs[index].data()['username'].toString();
+                      final userImage =
+                          docs[index].data()['userImage'].toString();
                       final isMe = docs[index].data()['userId'].toString() ==
                           userSnapshot.data.uid;
                       return Container(
                         padding: const EdgeInsets.all(8),
                         child: MessageBubble(
-                          key: ValueKey(docs[index].reference.id),
-                          message: message,
-                          isMe: isMe,
-                          username: username,
-                        ),
+                            key: ValueKey(docs[index].reference.id),
+                            message: message,
+                            isMe: isMe,
+                            username: username,
+                            userImage: userImage),
                       );
                     },
                     itemCount: docs.length,
