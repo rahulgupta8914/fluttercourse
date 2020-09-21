@@ -1,4 +1,5 @@
 import 'package:chat_app/screens/auth_screen.dart';
+import 'package:chat_app/screens/spalsh_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -32,14 +33,13 @@ class MyApp extends StatelessWidget {
               child: Text('Something went wrong!'),
             );
           }
-          // if (snapshot.connectionState == ConnectionState.waiting) {
-          //   return Center(
-          //     child: CircularProgressIndicator(),
-          //   );
-          // }
+
           if (snapshot.connectionState == ConnectionState.done) {
             return StreamBuilder(
               builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return SplashScreen();
+                }
                 if (snapshot.hasData) {
                   return ChatScreen();
                 }
